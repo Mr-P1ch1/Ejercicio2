@@ -3,13 +3,13 @@ public class Paquete {
     private String contenido;
     private String numero;
 
-
     public Paquete(String nombre, String contenido, String numero) {
         this.nombre = nombre;
         this.contenido = contenido;
         this.numero = numero;
     }
 
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -36,8 +36,10 @@ public class Paquete {
 
     @Override
     public String toString() {
-        return "Nombre= " + nombre +
-                "\n Contenido= " + contenido+
-                "\n Numero= " + numero;
+        return "Paquete{" +
+                "nombre='" + nombre + '\'' +
+                ", contenido='" + contenido + '\'' +
+                ", numero='" + numero + '\'' +
+                '}';
     }
 }

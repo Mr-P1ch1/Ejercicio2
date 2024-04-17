@@ -2,92 +2,51 @@ import java.util.Stack;
 
 public class Pila {
 
+    private Stack<Paquete> almacenamiento;
 
-        private Stack<Paquete> almacenamiento;
+    public Pila() {
+        almacenamiento = new Stack<>();
+    }
 
-        public Pila() {
-            almacenamiento = new Stack<Paquete>();
+    public boolean estaVaacia() {
+        return almacenamiento.isEmpty();
+    }
 
-        }
-
-
-        public boolean estaVaacia(){
-            return almacenamiento.empty();
-        }//metodo para verificar si esta vacio, retorna verdadero o falso
-
-        public void apilar(String nombre, String contenido, String numero){
-            Paquete paquete = new Paquete(nombre, contenido, numero);
+    public void apilar(Paquete paquete) {
+        if (paquete != null) {
             almacenamiento.push(paquete);
+        } else {
+            throw new IllegalArgumentException("El paquete no puede ser null.");
         }
+    }
 
-        public Paquete desapilar() throws Exception {
-            if (estaVaacia())
-                throw new Exception("No hay elementos");
+    public Paquete desapilar() {
+        if (!estaVaacia()) {
             return almacenamiento.pop();
-            //POP PARA SACAR ELEMENTOS
+        } else {
+            throw new IllegalStateException("No puedes desapilar de una pila vacía.");
         }
-        public String sacar(){
-            String binario = "";
-            do {
-                binario += almacenamiento.pop();
-            }while (estaVaacia()==false);
-            return binario;
-        }
+    }
 
-        public Paquete cima() throws Exception{
-            if (estaVaacia())
-                throw new Exception("No hay elementos");
-            return almacenamiento.peek();
-        }
-
-        public int buscarElemento(String i) throws Exception{
-            if (estaVaacia())
-                throw new Exception("No hay elementos");
-            for (int j=almacenamiento.size()-1; j<= 0; j--){
-                if (almacenamiento.get(j).getNumero().equals(i)) {
-                    return j;
-                }
-
+    public int buscarElemento(String numeroPaquete) {
+        for (int i = almacenamiento.size() - 1; i >= 0; i--) {
+            if (almacenamiento.get(i).getNumero().equals(numeroPaquete)) {
+                return i;
             }
-            throw new  Exception("No hay el elemento ");
+        }
+        return -1; // Si no se encuentra, devolvemos -1
+    }
+
+    public int getTamano() {
+        return almacenamiento.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = almacenamiento.size() - 1; i >= 0; i--) {
+            sb.append("Caja ").append(i + 1).append(": ").append(almacenamiento.get(i).toString()).append("\n");
+        }
+        return sb.toString();
+    }
 }
-
-    public int getTamano(){
-            return almacenamiento.size();
-    }
-        @Override
-        public String toString(){
-            String mensaje = "";
-            for (int i = almacenamiento.size()-1; i>= 0; i--){
-                mensaje += almacenamiento.get(i)+ "\n";
-            }
-            return mensaje;
-        }
-
-    public Paquete obtenerPosicionEnPila(String elementoBuscado) {
-        Stack<Paquete> pilaAuxiliar = new Stack<>();
-        int posicion = 0;
-        Paquete elementoActual = null;
-
-        while (estaVaacia()) {
-            elementoActual = almacenamiento.pop();
-            pilaAuxiliar.push(elementoActual);
-            posicion++;
-
-            if (elementoActual.getNumero().equals(elementoBuscado)){
-                break;
-            }
-
-        }
-        // Restaurar la pila original
-        while (!pilaAuxiliar.isEmpty()) {
-            almacenamiento.push(pilaAuxiliar.pop());
-        }
-
-        return elementoActual;
-    }
-
-
-
-    }
-
